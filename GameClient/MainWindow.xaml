@@ -1,0 +1,32 @@
+﻿<Window x:Class="GameClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="460" Width="537.941">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF7A1010" Offset="0"/>
+            <GradientStop Color="#FFAA1C1C" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid Height="429" VerticalAlignment="Bottom">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="221*"/>
+            <RowDefinition Height="198*"/>
+        </Grid.RowDefinitions>
+        <WebBrowser Margin="10,52,13,39" Grid.RowSpan="2" Source="http://80.211.222.8/"/>
+        <Label x:Name="titleLabel" Margin="10,10,0,0" FontWeight="Bold" FontSize="18" Height="49" VerticalAlignment="Top" HorizontalAlignment="Left" Width="141">
+            <Label Content="6XXX9 Metin2" HorizontalAlignment="Left" Foreground="White"/>
+        </Label>
+
+        <Button x:Name="mainSiteBtn" Content="Strona główna" Margin="0,168,308,10" Background="#FF1D99E0" Grid.Row="1" HorizontalAlignment="Right" Width="96" Click="mainSiteBtn_Click"/>
+        <Button x:Name="optionBtn" Content="Opcje" Margin="10,0,0,10" Background="#FF1D99E0" Grid.Row="1" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="88" Click="optionBtn_Click"/>
+        <Button x:Name="playBtn" Content="Graj!" Margin="0,0,10,10" Background="#FF1D99E0" Grid.Row="1" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="88" Click="playBtn_Click"/>
+        <Label x:Name="versionLabel" Content="ver. 0.0.1" HorizontalAlignment="Left" Margin="165,21,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.279,0.566" Foreground="#FF3667EC"/>
+        <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="24" Margin="227,169,0,0" Grid.Row="1" VerticalAlignment="Top" Width="200"/>
+
+    </Grid>
+</Window>
