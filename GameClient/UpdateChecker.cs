@@ -10,13 +10,22 @@ namespace GameClient
 {
     class UpdateChecker //Klasa która odpowiada za sprawdzenie czy sa jakies pliki do zaaktualizowania, czyta tez ich sciezki
     {
-        private static string fileName = "._files";
+        private readonly string fileName = "._files";
 
-        public static bool IsEmpty()
+        private List<FilesToUpdate> files;
+
+        public List<FilesToUpdate> GetFiles
+        {
+            get { return files; }
+            set { files = value; }
+        }
+
+
+        public void CreatingListOfFiles()
         {
             try
             {
-                List<FilesToUpdate> files = new List<FilesToUpdate>();
+                files = new List<FilesToUpdate>();
 
                 List<string> lines = File.ReadAllLines(fileName).ToList();
 
@@ -30,7 +39,7 @@ namespace GameClient
                         ShaHash = entries[1]
                     };
 
-                    files.Add(fileToUpdate);       
+                    files.Add(fileToUpdate);
                 }
 
                 foreach (var file in files)
@@ -45,10 +54,6 @@ namespace GameClient
 
                 throw;
             }
-
-            return true;
         }
-
-
     }
 }

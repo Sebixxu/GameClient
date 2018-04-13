@@ -13,14 +13,19 @@ namespace GameClient
     {
         private static WebClient webClient;
 
-        private string files = "._files";
-        private string fileName;
+        private string infoFile = "._files";
+        private List<FilesToUpdate> filesToUpdate;
         private string placeToSave;
         private bool result = false;
         private ProgressBar progressBar;
 
-        private string uriString = "http://80.211.222.8/patch/files/";
+        private string baseUriString = "http://80.211.222.8/patch/files/";
         private string checkerString = "http://80.211.222.8/patch/files/._files";
+
+        public Downloader()
+        {
+
+        }
 
         public Downloader(ProgressBar progressBar)
         {
@@ -28,13 +33,54 @@ namespace GameClient
         }
 
 
-        public Downloader(string fileName, ProgressBar progressBar)
+        public Downloader(List<FilesToUpdate> filesToUpdate, ProgressBar progressBar)
         {
-            this.fileName = fileName;
+            this.filesToUpdate = filesToUpdate;
             this.progressBar = progressBar;
         }
 
-        public void AnyChanges()
+        public async void DownloadingAllFiles()
+        {
+            foreach (FilesToUpdate file in filesToUpdate)
+            {
+                DownloadingFile(file);
+            }
+        }
+
+        public async void DownloadingFile(FilesToUpdate file)
+        {
+            string uriString = baseUriString + file.FilePath;
+
+            if(System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                try
+                {
+                    using (webClient = new WebClient())
+                    {
+                        var uri = new Uri(uriString);
+
+                        webClient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
+                        webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
+
+                        MessageBox.Show("Pobieram plik" + file.FilePath);
+
+                        //webClient.DownloadFile(uri, file.FilePath);
+                        await webClient.DownloadFileTaskAsync(uri, file.FilePath);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Problem z połączeniem internetowym.");
+            }
+        }
+
+        public void DownloadingInfoFile()
         {
             if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
@@ -49,22 +95,20 @@ namespace GameClient
 
                         MessageBox.Show("Pobieram plik do sprawdzenia akutalizajci");
 
-                        webClient.DownloadFileAsync(uri, files);
-
-                        result = true;
+                        webClient.DownloadFile(uri, infoFile);
                     }
 
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     MessageBox.Show("EXCEPTION OVER 4K");
-                    MessageBox.Show(e.ToString());
+                    MessageBox.Show(ex.ToString());
                 }
             }
 
             else
             {
-                result = false;
+                MessageBox.Show("Problem z połączeniem internetowym.");
             }
         }
 

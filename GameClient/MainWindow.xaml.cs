@@ -27,12 +27,7 @@ namespace GameClient
 
         private async void playBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Task task = new Task(Launcher.CheckUpdates(progressBar));
-
-            //Launcher.CheckUpdates(progressBar);
-            //Launcher.PlayGame("Metin2Dev_Distribute.exe");
-
-            Launcher.CheckUpdates(progressBar);
+            Launcher.UpdateFiles(progressBar);
         }
 
         private void mainSiteBtn_Click(object sender, RoutedEventArgs e)

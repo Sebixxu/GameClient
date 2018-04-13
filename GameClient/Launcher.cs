@@ -10,7 +10,7 @@ namespace GameClient
     {
         private static string uriString = "http://80.211.222.8/patch/files/";
         private static string checkerString = "http://80.211.222.8/patch/files/._files";
-        private static string files = "._files";
+        private static string file = "._files";
         private static object baton = new object();
 
         public static void PlayGame(string launcherName)
@@ -25,12 +25,24 @@ namespace GameClient
             //return true;
         }
 
-        public static void CheckUpdates(ProgressBar progressBar)
+        public static void UpdateFiles(ProgressBar progressBar)
         {
-            File.Delete(files);
+            if(File.Exists(file))
+            {
+                File.Delete(file);
+            }
 
-            Downloader download = new Downloader(progressBar);
-            download.AnyChanges();
+            Downloader downloadInfoFile = new Downloader();
+
+            downloadInfoFile.DownloadingInfoFile();
+
+            UpdateChecker updateChecker = new UpdateChecker();
+
+            updateChecker.CreatingListOfFiles();
+
+            Downloader download = new Downloader(updateChecker.GetFiles, progressBar);
+
+            download.DownloadingAllFiles();
         }
 
         public static void Options(string optionName)
