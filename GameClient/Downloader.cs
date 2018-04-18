@@ -39,7 +39,7 @@ namespace GameClient
             this.progressBar = progressBar;
         }
 
-        public async void DownloadingAllFiles()
+        public void DownloadingAllFiles()
         {
             foreach (FilesToUpdate file in filesToUpdate)
             {

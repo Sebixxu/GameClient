@@ -25,7 +25,7 @@ namespace GameClient
             InitializeComponent();
         }
 
-        private async void playBtn_Click(object sender, RoutedEventArgs e)
+        private void playBtn_Click(object sender, RoutedEventArgs e)
         {
             Launcher.UpdateFiles(progressBar);
         }
